@@ -27,7 +27,17 @@ struct LlamaCppOptions {
 class LlamaCppEngine final : public Engine {
 public:
   explicit LlamaCppEngine(LlamaCppOptions opts);
+<<<<<<< HEAD
   ~LlamaCppEngine() override;
+=======
+  ~LlamaCppEngine() override = default;
+
+  // Rule of five: this type owns non-copyable and non-movable resources (mutex, sessions).
+  LlamaCppEngine(const LlamaCppEngine &) = delete;
+  LlamaCppEngine &operator=(const LlamaCppEngine &) = delete;
+  LlamaCppEngine(LlamaCppEngine &&) = delete;
+  LlamaCppEngine &operator=(LlamaCppEngine &&) = delete;
+>>>>>>> c096493 (init)
 
   GenerateResult Generate(const std::string &model,
                           const std::string &prompt,
@@ -35,6 +45,16 @@ public:
                           const std::string &session_id) override;
 
 private:
+<<<<<<< HEAD
+=======
+  struct BackendRef {
+    BackendRef();
+    ~BackendRef();
+    BackendRef(const BackendRef &) = delete;
+    BackendRef &operator=(const BackendRef &) = delete;
+  };
+
+>>>>>>> c096493 (init)
   struct Session {
     std::unique_ptr<llama_context, void (*)(llama_context *)> ctx;
     std::vector<llama_token> tokens;
@@ -47,6 +67,11 @@ private:
   std::string token_to_piece_(llama_context *ctx, llama_token tok) const;
 
 private:
+<<<<<<< HEAD
+=======
+  // Must be constructed before any llama objects and destroyed after them.
+  BackendRef backend_;
+>>>>>>> c096493 (init)
   LlamaCppOptions opts_;
   std::unique_ptr<llama_model, void (*)(llama_model *)> model_;
 
