@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package minisgl.inference;
+
+option java_multiple_files = true;
+option java_package = "com.minisgl.inference";
+
+service InferenceService {
+  rpc Generate(GenerateRequest) returns (GenerateResponse);
+  rpc StreamGenerate(GenerateRequest) returns (stream GenerateChunk);
+  rpc Health(HealthRequest) returns (HealthResponse);
+}
+
+message GenerateRequest {
+  string model = 1;
+  string prompt = 2;
+  int32 max_tokens = 3;
+  float temperature = 4;
+  int32 top_k = 5;
+  bool ignore_eos = 6;
+
+  // Optional: session id for multi-turn chat on a single node.
+  string session_id = 20;
+}
+
+message GenerateResponse {
+  string text = 1;
+  int32 prompt_tokens = 2;
+  int32 completion_tokens = 3;
+  int64 latency_ms = 4;
+}
+
+message GenerateChunk {
+  string token_text = 1;
+  bool finished = 2;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  bool ok = 1;
+  string message = 2;
+}
+
+
