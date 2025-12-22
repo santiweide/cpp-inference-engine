@@ -47,10 +47,6 @@ add_executable(minisgl_grpc_server
   src/main.cc
   src/server.cc
   src/engine/dummy_engine.cc
-<<<<<<< HEAD
-  src/engine/llama_cpp_engine.cc
-=======
->>>>>>> c096493 (init)
 )
 
 target_include_directories(minisgl_grpc_server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -79,11 +75,7 @@ if (MINISGL_ENABLE_LLAMA_CPP)
   else()
     target_include_directories(minisgl_grpc_server PRIVATE ${LLAMA_CPP_DIR})
   endif()
-<<<<<<< HEAD
-=======
-
   target_sources(minisgl_grpc_server PRIVATE src/engine/llama_cpp_engine.cc)
->>>>>>> c096493 (init)
 else()
   message(STATUS "MINISGL_ENABLE_LLAMA_CPP=OFF: building server without llama.cpp backend")
 endif()

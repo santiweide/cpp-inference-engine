@@ -1,13 +1,9 @@
 #include "engine/llama_cpp_engine.h"
 
 #include <algorithm>
-<<<<<<< HEAD
-#include <chrono>
-=======
 #include <atomic>
 #include <chrono>
 #include <mutex>
->>>>>>> c096493 (init)
 #include <stdexcept>
 
 // llama.cpp headers (expect include path to point to llama.cpp/include)
@@ -24,8 +20,6 @@ inline auto now_ms() -> int64_t {
 
 } // namespace
 
-<<<<<<< HEAD
-=======
 namespace {
 std::mutex g_llama_backend_mu;
 std::atomic<int> g_llama_backend_refs{0};
@@ -45,7 +39,6 @@ LlamaCppEngine::BackendRef::~BackendRef() {
   }
 }
 
->>>>>>> c096493 (init)
 LlamaCppEngine::LlamaCppEngine(LlamaCppOptions opts)
     : opts_(std::move(opts)),
       model_(nullptr, [](llama_model *m) {
@@ -56,11 +49,6 @@ LlamaCppEngine::LlamaCppEngine(LlamaCppOptions opts)
     throw std::runtime_error("LlamaCppEngine: model_path is empty");
   }
 
-<<<<<<< HEAD
-  llama_backend_init();
-
-=======
->>>>>>> c096493 (init)
   llama_model_params mparams = llama_model_default_params();
   if (opts_.n_gpu_layers != 0) {
     mparams.n_gpu_layers = opts_.n_gpu_layers;
@@ -73,14 +61,6 @@ LlamaCppEngine::LlamaCppEngine(LlamaCppOptions opts)
   model_.reset(m);
 }
 
-<<<<<<< HEAD
-LlamaCppEngine::~LlamaCppEngine() {
-  // llama.cpp uses global backend state
-  llama_backend_free();
-}
-
-=======
->>>>>>> c096493 (init)
 LlamaCppEngine::Session &LlamaCppEngine::get_or_create_session_(const std::string &session_id) {
   const std::string key = session_id.empty() ? "__default__" : session_id;
   auto it = sessions_.find(key);
