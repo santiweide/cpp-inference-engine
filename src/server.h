@@ -20,15 +20,12 @@ public:
   explicit Server(Options opts);
   ~Server();
 
-<<<<<<< HEAD
-=======
   // Rule of five: user-declared dtor disables implicit moves; make intent explicit.
   Server(const Server &) = delete;
   Server &operator=(const Server &) = delete;
   Server(Server &&) noexcept = default;
   Server &operator=(Server &&) noexcept = default;
 
->>>>>>> c096493 (init)
   void RunBlocking();
 
 private:
